@@ -98,7 +98,7 @@ class Oblea {
 class ObleaCrujiente inherits Oblea{
 	override method mordisco() {
 		if (peso >= 70) {
-			// el peso pasa a ser la mitad
+			// el peso pasa a ser la mitad.
 			peso = peso * 0.5
 			mordiscosRecibidos += 1
 		} else { 
