@@ -65,7 +65,8 @@ object mariano {
 	}
 	
 	method baniarGolosina(unaGolosina){
-		golosinas.add(unaGolosina)
+		const nuevaGolosinaBaniada = new GolosinaBaniada(golosinaInterior = unaGolosina)
+		golosinas.add(nuevaGolosinaBaniada)
 	}
 }
 

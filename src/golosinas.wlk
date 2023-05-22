@@ -21,6 +21,18 @@ class Bombon {
 	method libreGluten() { return true }
 }
 
+class BombonDuro inherits Bombon{
+	override method mordisco() { peso -= 1 }
+	method gradoDureza(){
+		if (peso > 12){
+			return 3
+		}
+		else if (peso.between(8,12)){
+			return 2
+		}
+		else{return 0}
+	}
+}
 
 class Alfajor {
 	var peso = 15
@@ -34,14 +46,21 @@ class Alfajor {
 
 class Caramelo {
 	var peso = 5
+	var property saborElegido
 
 	method precio() { return 12 }
 	method peso() { return peso }
 	method mordisco() { peso = peso - 1 }
-	method sabor() { return frutilla }
 	method libreGluten() { return true }
 }
 
+class CarameloConCorazon inherits Caramelo{
+	override method mordisco(){
+		peso = peso - 1
+		self.saborElegido(chocolate)
+	}
+	override method precio(){return 13}
+}
 
 class Chupetin {
 	var peso = 7
@@ -59,6 +78,7 @@ class Chupetin {
 
 class Oblea {
 	var peso = 250
+	var mordiscosRecibidos = 0
 	
 	method precio() { return 5 }
 	method peso() { return peso }
@@ -75,6 +95,26 @@ class Oblea {
 	method libreGluten() { return false }
 }
 
+class ObleaCrujiente inherits Oblea{
+	override method mordisco() {
+		if (peso >= 70) {
+			// el peso pasa a ser la mitad
+			peso = peso * 0.5
+			mordiscosRecibidos += 1
+		} else { 
+			// pierde el 25% del peso
+			peso = peso - (peso * 0.25)
+			mordiscosRecibidos += 1
+		}
+		if (mordiscosRecibidos <= 3){
+			peso -= 3
+		}
+	}
+	method estaDebil(){
+		return mordiscosRecibidos > 3
+	}
+}
+
 class Chocolatin {
 	// hay que acordarse de *dos* cosas, el peso inicial y el peso actual
 	// el precio se calcula a partir del precio inicial
@@ -89,6 +129,18 @@ class Chocolatin {
 	method sabor() { return chocolate }
 	method libreGluten() { return false }
 
+}
+
+class ChocolatinVip inherits Chocolatin{
+	const humedadVip = 0.3
+	override method peso() { return (pesoInicial - comido).max(0) * (1 + humedadVip) }
+	method humedadVip() = humedadVip
+}
+
+class ChocolatinPremium inherits ChocolatinVip{
+	const humedadPremium = humedadVip / 2
+	method humedadPremium()= humedadPremium
+	
 }
 
 class GolosinaBaniada {
